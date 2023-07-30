@@ -26,7 +26,6 @@ exports.getAllPersons = async (req, res) => {
             limit,
             persons,
         });
-        res.json(persons);
     } catch (err) {
         res.status(500).json({ error: 'Error getting persons.', message: err.message });
     }

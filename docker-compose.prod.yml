@@ -3,10 +3,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: ../config/dev/frontend/Dockerfile
-    restart: always
-    ports:
-      - ${FRONT_PORT}:3000
+      dockerfile: ../config/prod/frontend/Dockerfile
     environment:
       - BACKEND_URL=${BACKEND_URL}
     depends_on:
@@ -17,10 +14,8 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: ../config/dev/backend/Dockerfile
+      dockerfile: ../config/prod/backend/Dockerfile
     restart: always
-    ports:
-      - ${PORT}:3000
     environment:
       - MONGO_URI=${MONGO_URI}
       - PORT=${PORT}
@@ -36,6 +31,18 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data:/data/db
+
+  nginx:
+    image: nginx
+    restart: always
+    ports:
+      - ${NGINX_PORT}:80
+    volumes:
+      - ./frontend/build:/usr/share/nginx/html
+      - ./config/prod/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend
+      - frontend
 
 volumes:
   mongodb_data:
