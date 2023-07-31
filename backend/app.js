@@ -3,10 +3,13 @@ const app = express();
 const mongoose = require('mongoose');
 const personRoutes = require('./routes/personRoutes');
 const logger = require('./logger');
+var cors = require('cors')
 
 
 // Load environment variables from .env file
 require('dotenv').config();
+
+app.use(cors())
 
 // Middleware to log each request
 app.use((req, res, next) => {
