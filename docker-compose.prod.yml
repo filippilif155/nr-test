@@ -5,7 +5,7 @@ services:
       context: ./frontend
       dockerfile: ../config/prod/frontend/Dockerfile
     environment:
-      - BACKEND_URL=${BACKEND_URL}
+      - REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
     depends_on:
       - backend
     volumes:

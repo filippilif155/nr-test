@@ -42,6 +42,9 @@ const Person = () => {
             }
             fetchPersons();
         } catch (error) {
+            if (error.response?.data?.message) {
+                error.message = error.response.data.message;
+            }
             toastRef.current.show({ severity: 'error', summary: error.message, detail: 'Something went wrong.' });
         }
     }
@@ -53,6 +56,9 @@ const Person = () => {
                 detail: 'Operation completed successfully.' });
             fetchPersons(1);
         } catch (error) {
+            if (error.response?.data?.message) {
+                error.message = error.response.data.message;
+            }
             toastRef.current.show({ severity: 'error', summary: error.message, detail: 'Something went wrong.' });
         }
     }
@@ -77,7 +83,7 @@ const Person = () => {
                 />
             </div>
             <div className="insert-form-container">
-                {persons.length && persons.map((person) => (
+                {persons?.length && persons.map((person) => (
                     <InsertForm
                         key={person._id}
                         isUpdate={true}
